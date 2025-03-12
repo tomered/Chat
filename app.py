@@ -7,7 +7,8 @@ app = Flask(__name__)
 def home():
     return render_template("index.html")
 
-@app.route("/GET /<room>", methods= ['GET'])
+# Implemented by Tomer
+@app.route("/<room>", methods= ['GET'])
 def room(room):
     return render_template("index.html")
 
