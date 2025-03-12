@@ -8,7 +8,7 @@ import os
 
 # Immplemented by Erik
 CHAT_LOG_FIELDS = ['room', 'date', 'time', 'username', 'message']
-FILE_PATH = './chat_log/chat.csv'
+FILE_PATH = './chat.csv'
 if not os.path.exists(FILE_PATH) or os.path.getsize(FILE_PATH) == 0:
     with open(FILE_PATH, mode='w', newline='') as f:
         writer = csv.writer(f)
@@ -31,7 +31,7 @@ def room(room):
 
 
 # Implemented by Erik
-@app.route('/api/chat/<room>', methods=['GET','POST'])
+@app.route('/api/chat/<room>', methods=['GET', 'POST'])
 def chat(room):
     if request.method == 'POST':
         username = request.form.get('username')
@@ -56,7 +56,6 @@ def chat(room):
 
         return jsonify({"chat": chat_entry, "success": True}), 201
 
-
     # Implemented by Sharon
     elif request.method == 'GET':
 
@@ -72,7 +71,7 @@ def chat(room):
             for row in reader:
                 if row[0] == room:
                     timestamp = row[2]
-                    date = row [1]
+                    date = row[1]
                     username = row[3]
                     message = row[4]
 
@@ -80,7 +79,6 @@ def chat(room):
                     messages.append(formatted_message)
 
             return "\n".join(messages)
-
 
 
 if __name__ == "__main__":
