@@ -6,7 +6,7 @@ import os
 
 # os.system('clear')
 
-# Implemented by Erik
+# Immplemented by Erik
 CHAT_LOG_FIELDS = ['room', 'date', 'time', 'username', 'message']
 FILE_PATH = './chat_log/chat.csv'
 if not os.path.exists(FILE_PATH) or os.path.getsize(FILE_PATH) == 0:
