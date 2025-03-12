@@ -19,7 +19,7 @@ app = Flask(__name__)
 
 
 # Implemented by Tomer
-@app.route("/<room>", methods=['GET'])
+@app.route("/<room>", methods= ['GET'])
 def room(room):
     return render_template("index.html")
 
