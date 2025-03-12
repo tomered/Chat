@@ -31,7 +31,7 @@ def room(room):
 
 
 # Implemented by Erik
-@app.route('/api/chat/<room>', methods=['GET', 'POST'])
+@app.route('/api/chat/<room>', methods=['GET','POST'])
 def chat(room):
     if request.method == 'POST':
         username = request.form.get('username')
@@ -55,6 +55,32 @@ def chat(room):
             writer.writerow(chat_entry.values())
 
         return jsonify({"chat": chat_entry, "success": True}), 201
+
+
+    # Implemented by Sharon
+    elif request.method == 'GET':
+
+        messages = []
+
+        if not os.path.exists(FILE_PATH):
+            return jsonify({"error": "Chat log file not found"}), 404
+
+        with open(FILE_PATH, 'r') as table:
+            reader = csv.reader(table)
+
+            next(reader)
+            for row in reader:
+                if row[0] == room:
+                    timestamp = row[2]
+                    date = row [1]
+                    username = row[3]
+                    message = row[4]
+
+                    formatted_message = f"[{date} {timestamp}] {username}: {message}\n"
+                    messages.append(formatted_message)
+
+            return "\n".join(messages)
+
 
 
 if __name__ == "__main__":
