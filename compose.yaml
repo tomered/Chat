@@ -1,0 +1,28 @@
+services:
+  myapp:
+    container_name: myapp
+    build: .
+    depends_on:
+      mysql:
+        condition: service_healthy
+    ports:
+      - 80:5000
+    networks:
+      - flask
+  mysql:
+    container_name: mysql
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: 123
+      MYSQL_DATABASE: mydb
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 30s
+      retries: 3
+      start_period: 30s
+      timeout: 10s
+    networks:
+      - flask
+
+networks:
+  flask:
